@@ -1,0 +1,13 @@
+Part 1
+
+1. git checkout -b [branch-name]
+	 git branch [branch-name]
+
+2. Fast-forward merge only occur when the original branch does not have new commits while the active branch is being worked on.
+
+3. git checkout [branch-name]
+
+4. git branch -d [branch-name] if there are no staged files
+	 git branch -D [branch-name] forces branch deletion
+
+5. merge conflicts occur when the original branch and the active branch have commits across the same files.

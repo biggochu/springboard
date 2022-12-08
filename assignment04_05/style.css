@@ -1,0 +1,168 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+#intro {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background: pink;
+}
+
+#intro h1 {
+  font-family: sans-serif;
+  font-size: 20vh;
+  width: 75vw;
+  color: white;
+}
+
+#game {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 100vh;
+/*  padding: 10vh;*/
+  background: bisque;
+}
+
+#game-inner {
+  width: 75vw;
+  padding: 5vh;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  width: 60vw;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  border: 10px solid white;
+  background: linen;
+  max-width: 600px;
+}
+
+#game-start {
+  color: white;
+  border-color: white;
+}
+
+#game-start:hover {
+  background: white;
+  color: #666;
+}
+
+#game-reset {
+  font-size: 20px;
+  padding: 5px 15px;
+  margin: 0 0 1em;
+}
+
+button {
+  background: transparent;
+  border: 3px solid #666;
+  font-size: 30px;
+  color: #666;
+  padding: 10px 25px;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+button:hover {
+  background: #666;
+  color: white;
+}
+
+#game-header {
+  background: white;
+/*  width: 100px;*/
+  padding: 7vh 3vw;
+  margin: 10vh 0;
+  text-align: center;
+}
+
+.game-control {
+  margin: 2em 0;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.game-control label {
+  display: block;
+  color: #999;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.game-control span {
+  font-size: 60px;
+}
+
+.card {
+/*  border: 1px solid black;*/
+  width: 100px;
+  height: 100px;
+
+  width: 80%;
+  height: 80%;
+
+  margin: 10px;
+  display: inline-block;
+  perspective: 1000px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.card-front::before {
+  content: '🌀';
+  color: white;
+  position: absolute;
+  font-size: 52px;
+  filter: grayscale(100%);
+  text-align: center;
+  vertical-align: text-top;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+}
+
+.card:not(.flipped):hover {
+  transform: scale(1.1);
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+/*.card:hover .card-inner, */
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.card-front {
+  background: black;
+}
+
+.card-back {
+/*  background-color: attr(data-color);*/
+  background-color: currentColor;
+  transform: rotateY(180deg);
+}

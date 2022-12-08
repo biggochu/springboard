@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>meme machine</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+  	<div class="container">
+  		<form class="meme-form" id="memeForm">
+        <h1>meme machine <sub>The leading source of internet pollution</sub></h1>
+        <div class="form-field">
+          <div class="form-field-label">
+            <label for="formImgUrl">Image URL</label>
+          </div>
+          <div class="form-field-input">
+            <input type="text" placeholder="Image url"
+            id="formImgUrl">
+          </div>
+        </div>
+  			<div class="form-field">
+          <div class="form-field-label">
+            <label for="formTextTop">Text at top</label>
+          </div>
+          <div class="form-field-input">
+  				  <input type="text" placeholder="Top text" id="formTextTop">
+          </div>
+  			</div>
+  			<div class="form-field">
+          <div class="form-field-label">
+            <label for="formTextBottom">Text at bottom</label>
+          </div>
+          <div class="form-field-input">
+  				  <input type="text" placeholder="Bottom text" id="formTextBottom">
+          </div>
+  			</div>
+        <div class="meme-submit">
+          <input type="submit" value="Add meme">
+        </div>
+  		</form>
+  		<div class="meme-list" id="memeList">
+  		</div>
+		</div>
+    <script src="script.js"></script>
+  </body>
+</html>

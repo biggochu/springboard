@@ -1,0 +1,28 @@
+Part 1
+
+1. mkdir first
+2. cd first
+3. touch person.txt
+4. mv person.txt another.txt
+5. cp another.txt copy.txt
+6. rm copy.txt
+7. cp -r first second
+8. rm -rf second
+
+
+Part 2
+
+1. Displays a manual for a command. Scroll by up/down, d-forward half a page, u-back half a page or mouse scroll (Mac). Quit by pressing :q.
+2. The -l flag lists files in the long format. The -a flag includes any directory entries that begin with '.'.
+3. option + left/right
+4. ctrl + e
+5. ctrl + a
+6. ctrl + w
+7. A terminal refers to a wrapper program which runs a shell. The shell is the program that actually processes commands and returns output.
+8. An absolute path is a path starting from the root directory /
+9. A relative path is a path starting from the working directory
+10. A flag is a modification to the operation of a command.
+	"cp -r" is recursive
+	"rm -rf" is recursive and forced
+	"ls -la" is list files in long format and include files that begin with '.'
+11. The 'r' flag instructs rm to recursively delete directories, subdirectories and all files they contain. The 'f' flag will force deletion.

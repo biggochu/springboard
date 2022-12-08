@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>memory game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="intro">
+      <div>
+        <h1>Memory Game!</h1>
+        <div style="text-align: left;">
+          <button id="game-start">Start</button>
+        </div>
+      </div>
+    </div>
+    <div id="game">
+      <div id="game-header">
+        <button id="game-reset">Reset</button>
+        <div class="game-control">
+          <label>Matches</label> 
+          <span id="game-score">0</span>
+          <span style="color:#999;font-size:30px;">/8</span>
+        </div>
+        <div class="game-control"><label>Clicks</label> <span id="game-clicks">0</span></div>
+        <div class="game-control"><label>Time</label> <span id="game-time">0</span></div>
+      </div>
+      <div id="game-inner"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

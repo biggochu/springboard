@@ -1,0 +1,55 @@
+html,
+body {
+	background: #333;
+	font-family: sans-serif;
+}
+.app {
+	width: 400px;
+	margin: 8vh auto 0;
+}
+
+.todo-form {
+	padding: 1em;
+	border-radius: 10px 10px 0 0;
+	background: white;
+	border-bottom: 3px solid #666;
+}
+.todo-text {
+	border:none;
+	border-bottom: 1px dashed #666;
+	padding: 5px;
+
+}
+
+.todos {
+	max-height: 500px;
+	background: #eee;
+	border-radius: 0 0 5px 5px;
+	overflow-y: scroll;
+}
+.todos-empty {
+	display: none;
+	color: #ccc;
+	text-align: center;
+	padding: 3rem 0;
+	font-size: 64px;
+	text-shadow: 0 0 2px #999;
+}
+.empty .todos-empty {
+	display: block;
+}
+
+.todo {
+	padding: 1em;
+	cursor: pointer;
+}
+.todo:hover {
+	color: #555;
+}
+.todo.complete label {
+	text-decoration: line-through;
+	text-decoration-thickness: 3px;
+}
+.todo+.todo {
+	border-top: 1px solid #ccc;
+}
