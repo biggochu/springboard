@@ -1,0 +1,7 @@
+ES2015 Global Constants
+const PI = 3.14
+
+1. let cannot be redeclared within a block scope
+2. const cannot be redeclared or reassigned within a block scope
+3. const cannot be reassigned
+4. hoisting is when the declaration of variables appears to move to the top of a script
