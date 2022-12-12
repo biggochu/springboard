@@ -33,6 +33,7 @@ function makeHtmlBoard() {
   let htmlBoard = document.getElementById('board')
 
   // TODO: add comment for this code
+  // create top header row and assign click handler
   var top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
@@ -45,6 +46,7 @@ function makeHtmlBoard() {
   htmlBoard.append(top);
 
   // TODO: add comment for this code
+  // create cells for pieces
   for (var y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     for (var x = 0; x < WIDTH; x++) {
@@ -77,8 +79,6 @@ function placeInTable(y, x) {
   div.classList.add('piece', 'player' + currPlayer)
   const cell = document.getElementById(`${y}-${x}`)
   cell.appendChild(div)
-
-  board[y][x] = currPlayer
 }
 
 /** endGame: announce game end */
@@ -104,6 +104,7 @@ function handleClick(evt) {
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
   placeInTable(y, x);
+  board[y][x] = currPlayer
 
   // check for win
   if (checkForWin()) {
@@ -113,7 +114,7 @@ function handleClick(evt) {
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
   if (board.every(row => row.every(cell => cell))) {
-    return endGame('All cells filled. Game over.')
+    return endGame('Tie. Game over.')
   }
 
   // switch players
