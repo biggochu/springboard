@@ -10,6 +10,8 @@
     table { width: 100%; }
     .movie-form { margin-bottom: 3rem; }
     .header-row { border-bottom: 1px solid #999; }
+    .header-row div { line-height: 3rem; user-select: none; }
+    #title-header:hover { color: #666; cursor: pointer; text-decoration: underline; }
     .movie-row { line-height: 4rem; }
   </style>
 </head>
@@ -17,7 +19,7 @@
 <body>
   <div class="container">
     <h1 id="title" class="text-center">Movie App</h1>
-    <div class="row movie-form">
+    <form class="row movie-form">
       <div class="col-sm-8">
         Movie
         <input class="form-control" type="text" placeholder="Movie title" id="movie-title">
@@ -30,11 +32,13 @@
         &nbsp;
         <button class="btn btn-primary form-control" id="submit">Submit</button>
       </div>
-    </div>
-    <div id="movies-list">
+    </form>
+    <div>
       <div class="row header-row">
-        <div class="col-sm-8">Title</div>
+        <div class="col-sm-8" id="title-header">Title</div>
         <div class="col-sm-4">Rating</div>
+      </div>
+      <div id="movies-list">
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -45,13 +49,32 @@
       const $ratingInput = $('#movie-rating')
       const $submit = $('#submit')
       const $movies = $('#movies-list')
+      const $titleHeader = $('#title-header')
+      const $form = $('form')
+      let movies = []
+      let direction = 1
+      let id = 1
 
-      $submit.on('click', e => {
-        const $row = newMovieRow($titleInput.val(), $ratingInput.val())
-        addMovieRow($row)
+      // $submit.on('click', e => {
+      $form.on('submit', e => {
+        e.preventDefault()
+        const title = $titleInput.val()
+        const rating = $ratingInput.val()
+
+        if (title.length <= 2)
+          return
+
+        addMovieRow(title, rating, id)
+        movies.push({ title, rating, id })
+        id++
       })
 
-      function newMovieRow(title, rating) {
+      $titleHeader.on('click', e => {
+        sortMovies()
+        direction *= -1
+      })
+
+      function addMovieRow(title, rating, id) {
         const $row = $('<div>', { class: "row movie-row" })
         const $title = $('<div>', { class: "col-sm-8" }).text(title)
         const $rating = $('<div>', { class: "col-sm-3" }).text(rating)
@@ -59,13 +82,21 @@
         const $btnCell = $('<div>', { class: "col-sm-1" }).append($btn)
 
         $row.append($title, $rating, $btnCell)
-        $btn.click(e => $row.remove())
+        $btn.click(e => {
+          console.log(movies.slice())
+          const idx = movies.findIndex(m => m.id === id)
+          movies.splice(idx, 1)
+          console.log(idx, movies)
+          $row.remove()
+        })
 
-        return $row
+        $movies.append($row)
       }
 
-      function addMovieRow($row) {
-        $movies.append($row)
+      function sortMovies() {
+        movies.sort((a, b) => a.title < b.title ? -direction : direction)
+        $movies.empty()
+        movies.forEach(m => addMovieRow(m.title, m.rating, m.id))
       }
     })
     </script>
