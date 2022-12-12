@@ -96,7 +96,7 @@ function handleClick(evt) {
 
   // get next spot in column (if none, ignore click)
   var y = findSpotForCol(x);
-  console.log(y, x)
+
   if (y === null) {
     return;
   }
