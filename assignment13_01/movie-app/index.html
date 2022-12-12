@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Rate That Movie</title>
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+  <style>
+    h1 { margin: 3rem 0 2rem; }
+    table { width: 100%; }
+    .movie-form { margin-bottom: 3rem; }
+    .header-row { border-bottom: 1px solid #999; }
+    .movie-row { line-height: 4rem; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 id="title" class="text-center">Movie App</h1>
+    <div class="row movie-form">
+      <div class="col-sm-8">
+        Movie
+        <input class="form-control" type="text" placeholder="Movie title" id="movie-title">
+      </div>
+      <div class="col-sm-2">
+        Rating
+        <input class="form-control" type="number" min="0" max="10" value="5" id="movie-rating">
+      </div>
+      <div class="col-sm-2">
+        &nbsp;
+        <button class="btn btn-primary form-control" id="submit">Submit</button>
+      </div>
+    </div>
+    <div id="movies-list">
+      <div class="row header-row">
+        <div class="col-sm-8">Title</div>
+        <div class="col-sm-4">Rating</div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+    // Add your code here!
+    $(function() {
+      const $titleInput = $('#movie-title')
+      const $ratingInput = $('#movie-rating')
+      const $submit = $('#submit')
+      const $movies = $('#movies-list')
+
+      $submit.on('click', e => {
+        const $row = newMovieRow($titleInput.val(), $ratingInput.val())
+        addMovieRow($row)
+      })
+
+      function newMovieRow(title, rating) {
+        const $row = $('<div>', { class: "row movie-row" })
+        const $title = $('<div>', { class: "col-sm-8" }).text(title)
+        const $rating = $('<div>', { class: "col-sm-3" }).text(rating)
+        const $btn = $('<button>', { class: "btn btn-danger" }).text('✖')
+        const $btnCell = $('<div>', { class: "col-sm-1" }).append($btn)
+
+        $row.append($title, $rating, $btnCell)
+        $btn.click(e => $row.remove())
+
+        return $row
+      }
+
+      function addMovieRow($row) {
+        $movies.append($row)
+      }
+    })
+    </script>
+</body>
+
+</html>
