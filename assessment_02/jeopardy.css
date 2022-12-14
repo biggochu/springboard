@@ -1,0 +1,248 @@
+/* some colors you may find useful:
+  #115ff4
+  #060ce9
+  #28a200
+  #8d2ab5
+  #74119c
+*/
+:root {
+  --table-border-width: 10px;
+  --table-border-color: #000329;
+  --table-bg-color: #010a78;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background: #1c1e2a;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 200%;
+  height: 100%;
+  transition: margin-left 0.8s;
+}
+
+.game-start {
+  overflow-y: scroll;
+}
+
+.game-start .wrapper {
+  min-height: 100%;
+  height: auto;
+}
+
+header,
+main {
+  width: 100%;
+  flex-grow: 1;
+}
+
+header {
+  min-height: 100%;
+  text-align: center;
+  background: white;
+}
+
+header .container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-logo {}
+
+main {
+  font-family: Copse;
+  min-height: 100%;
+  background: #1c1e2a;
+}
+
+table {
+  border-radius: 5px;
+  min-height: 460px;
+  background: var(--table-bg-color);
+}
+
+th {
+  text-align: center;
+  width: 16.66666666666%;
+  padding: 2em 1em !important;
+  vertical-align: middle;
+  border-width: var(--table-border-width) !important;
+  border-color: var(--table-border-color);
+  text-transform: capitalize;
+  text-transform: uppercase;
+  color: white;
+}
+
+tbody tr {
+  border-color: var(--table-border-color);
+  border-width: var(--table-border-width) !important;
+  min-height: 80px;
+}
+
+table tbody tr>td {
+  text-align: center;
+  padding: 15px 10px !important;
+  color: yellow;
+  border-color: var(--table-border-color);
+  border-width: var(--table-border-width) !important;
+  cursor: pointer;
+  vertical-align: middle;
+  font-family: Helvetica, sans-serif;
+}
+
+td:hover {
+  text-decoration: underline;
+  color: #eee;
+}
+
+td.answer {
+  text-decoration: none;
+  color: white;
+  cursor: default;
+}
+
+.original-logo {
+  padding: 2em;
+  text-align: center;
+  margin-right: -85px;
+}
+
+.original-logo img {
+  margin-right: 20px;
+}
+
+.loading-animation {
+  visibility: hidden;
+}
+
+.loading .loading-animation {
+  visibility: visible;
+}
+
+.loading #jeopardy::after {
+  display: block;
+  content: ' ';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/*.original-logo img {
+  height: 75px;
+}*/
+
+
+/* 
+Responsive CSS TV
+https://codepen.io/leon-ho/pen/AEOvWP 
+
+Copyright (c) 2022 by L (https://codepen.io/leon-ho/pen/AEOvWP)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
+#monitor {
+  background: #000;
+  position: relative;
+  border-top: 3px solid #888;
+  /*  margin: 5%;*/
+  margin: 0 0 7.5%;
+  padding: 2% 2% 4% 2%;
+  border-radius: 10px;
+  border-bottom-left-radius: 50% 2%;
+  border-bottom-right-radius: 50% 2%;
+  transition: margin-right 1s;
+}
+
+#monitor:after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 3%;
+  left: 36%;
+  height: .5%;
+  width: 28%;
+  background: #ddd;
+  border-radius: 50%;
+  box-shadow: 0 0 3px 0 white;
+}
+
+#monitorscreen {
+  position: relative;
+  background-color: #777;
+  background-size: cover;
+  background-position: top center;
+  height: 0;
+  padding-bottom: 56.25%;
+  position: relative;
+  overflow: hidden;
+}
+
+
+@media all and (min-width: 960px) {
+  #monitor {
+    -webkit-animation: tvflicker .2s infinite alternate;
+    -moz-animation: tvflicker .5s infinite alternate;
+    -o-animation: tvflicker .5s infinite alternate;
+    animation: tvflicker .5s infinite alternate;
+  }
+
+  @-webkit-keyframes tvflicker {
+    0% {
+      box-shadow: 0 0 100px 0 rgba(200, 235, 255, 0.4);
+    }
+
+    100% {
+      box-shadow: 0 0 95px 0 rgba(200, 230, 255, 0.45);
+    }
+  }
+
+  @-moz-keyframes tvflicker {
+    0% {
+      box-shadow: 0 0 100px 0 rgba(225, 235, 255, 0.4);
+    }
+
+    100% {
+      box-shadow: 0 0 60px 0 rgba(200, 220, 255, 0.6);
+    }
+  }
+
+  @-o-keyframes tvflicker {
+    0% {
+      box-shadow: 0 0 100px 0 rgba(225, 235, 255, 0.4);
+    }
+
+    100% {
+      box-shadow: 0 0 60px 0 rgba(200, 220, 255, 0.6);
+    }
+  }
+
+  @keyframes tvflicker {
+    0% {
+      box-shadow: 0 0 100px 0 rgba(225, 235, 255, 0.4);
+    }
+
+    100% {
+      box-shadow: 0 0 60px 0 rgba(200, 220, 255, 0.6);
+    }
+  }
+}
