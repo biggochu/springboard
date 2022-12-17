@@ -25,6 +25,7 @@ async function login(evt) {
 
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
+  putStoriesOnPage()
 }
 
 $loginForm.on("submit", login);
@@ -59,6 +60,9 @@ $signupForm.on("submit", signup);
 function logout(evt) {
   console.debug("logout", evt);
   localStorage.clear();
+  $('#nav-user-links').hide()
+  hidePageComponents()
+  putStoriesOnPage()
   location.reload();
 }
 
@@ -111,6 +115,8 @@ function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
   $allStoriesList.show();
+  $loginForm.hide()
+  $signupForm.hide()
 
   updateNavOnLogin();
 }

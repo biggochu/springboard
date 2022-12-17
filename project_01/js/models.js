@@ -25,7 +25,7 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    return (new URL(this.url)).hostname;
   }
 }
 
@@ -73,8 +73,22 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
+  async addStory(user, { title, author, url }) {
     // UNIMPLEMENTED: complete this function!
+    const response = await axios({
+      url: `${BASE_URL}/stories`,
+      method: "POST",
+      data: {
+        story: {
+          title,
+          author,
+          url
+        },
+        token: user.loginToken
+      }
+    })
+
+    return new Story(response.data.story)
   }
 }
 
@@ -90,19 +104,20 @@ class User {
    */
 
   constructor({
-                username,
-                name,
-                createdAt,
-                favorites = [],
-                ownStories = []
-              },
-              token) {
+      username,
+      name,
+      createdAt,
+      favorites = [],
+      ownStories = []
+    },
+    token) {
     this.username = username;
     this.name = name;
     this.createdAt = createdAt;
 
     // instantiate Story instances for the user's favorites and ownStories
     this.favorites = favorites.map(s => new Story(s));
+    this.favoritesIds = favorites.map(s => s.storyId)
     this.ownStories = ownStories.map(s => new Story(s));
 
     // store the login token on the user so it's easy to find for API calls.
@@ -125,8 +140,7 @@ class User {
 
     let { user } = response.data
 
-    return new User(
-      {
+    return new User({
         username: user.username,
         name: user.name,
         createdAt: user.createdAt,
@@ -152,8 +166,7 @@ class User {
 
     let { user } = response.data;
 
-    return new User(
-      {
+    return new User({
         username: user.username,
         name: user.name,
         createdAt: user.createdAt,
@@ -178,8 +191,7 @@ class User {
 
       let { user } = response.data;
 
-      return new User(
-        {
+      return new User({
           username: user.username,
           name: user.name,
           createdAt: user.createdAt,
@@ -191,6 +203,34 @@ class User {
     } catch (err) {
       console.error("loginViaStoredCredentials failed", err);
       return null;
+    }
+  }
+
+  async addFavoriteStory(storyId) {
+    try {
+      const response = await axios({
+        url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
+        method: "POST",
+        data: { token: this.loginToken }
+      })
+
+      this.favorites = response.data.user.favorites
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async removeFavoriteStory(storyId) {
+    try {
+      const response = await axios({
+        url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
+        method: "DELETE",
+        data: { token: this.loginToken }
+      })
+
+      this.favorites = response.data.user.favorites
+    } catch (error) {
+      console.error(error)
     }
   }
 }

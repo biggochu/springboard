@@ -33,4 +33,25 @@ function updateNavOnLogin() {
   $navLogin.hide();
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
+  $('#nav-user-links').show()
 }
+
+function navNewStory(e) {
+  console.debug('navNewStory', e)
+  hidePageComponents()
+  $('#new-story-form').show()
+  putStoriesOnPage();
+}
+$('#nav-new-story').on('click', navNewStory)
+
+function navUserProfile(e) {
+  console.debug('navUserProfile', e)
+  hidePageComponents()
+}
+$navUserProfile.on('click', navUserProfile)
+
+function navFavoriteStories(e) {
+  console.debug('navFavoriteStories', e)
+  hidePageComponents()
+}
+$('#nav-favorite-stories').on('click', navFavoriteStories)
