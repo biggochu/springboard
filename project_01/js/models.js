@@ -37,6 +37,7 @@ class Story {
 class StoryList {
   constructor(stories) {
     this.stories = stories;
+    this.storiesIds = stories.map(s => s.storyId)
   }
 
   /** Generate a new StoryList. It:
@@ -73,7 +74,7 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory(user, { title, author, url }) {
+  static async addStory(user, { title, author, url }) {
     // UNIMPLEMENTED: complete this function!
     const response = await axios({
       url: `${BASE_URL}/stories`,
@@ -89,6 +90,14 @@ class StoryList {
     })
 
     return new Story(response.data.story)
+  }
+
+  removeStory(storyId) {
+    const idx = this.storiesIds.indexOf(storyId)
+    if (idx > -1) {
+      this.stories.splice(idx, 1)
+      this.storiesIds.splice(idx, 1)
+    }
   }
 }
 
@@ -119,7 +128,7 @@ class User {
     this.favorites = favorites.map(s => new Story(s));
     this.favoritesIds = favorites.map(s => s.storyId)
     this.ownStories = ownStories.map(s => new Story(s));
-    this.ownStoryIds = ownStories.map(s => s.storyId)
+    this.ownStoriesIds = ownStories.map(s => s.storyId)
 
     // store the login token on the user so it's easy to find for API calls.
     this.loginToken = token;
@@ -260,6 +269,19 @@ class User {
           token: this.loginToken
         }
       })
+
+      let idx = this.favoritesIds.indexOf(storyId)
+      if (idx > -1) {
+        this.favorites.splice(idx, 1)
+        this.favoritesIds.splice(idx, 1)
+      }
+
+      idx = this.ownStoriesIds.indexOf(storyId)
+      console.log(idx)
+      if (idx > -1) {
+        this.ownStories.splice(idx, 1)
+        this.ownStoriesIds.splice(idx, 1)
+      }
 
       return response
     } catch (err) {
