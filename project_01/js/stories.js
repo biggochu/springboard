@@ -20,11 +20,22 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
+  console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+  let favoriteHtml = ``
+
+  if (currentUser) {
+    if (currentUser.favoritesIds.indexOf(story.storyId) > -1) {
+      favoriteHtml = `<span class="story-favorite-btn is-favorite"><i class="fas fa-star"></i></span>`
+    } else {
+      favoriteHtml = `<span class="story-favorite-btn"><i class="far fa-star"></i></span>`
+    }
+  }
+
   return $(`
       <li id="${story.storyId}">
+        ${favoriteHtml}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -50,3 +61,49 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+async function submitNewStory(e) {
+  e.preventDefault()
+
+  console.debug("submitNewStory")
+
+  try {
+    const title = $('#new-story-title').val()
+    const author = $('#new-story-author').val()
+    const url = $('#new-story-url').val()
+
+    const story = await storyList.addStory(currentUser, { title, author, url })
+    storyList.stories = [story, ...storyList.stories]
+    putStoriesOnPage()
+  } catch (error) {
+    console.error(error)
+  }
+}
+$newStoryForm.on('submit', submitNewStory)
+
+function favoriteStoryClick(e) {
+  const $btn = $(this)
+  const $storyLI = $btn.parent()
+  const storyId = $storyLI.attr('id')
+
+  if (this.classList.contains('is-favorite')) {
+    currentUser.removeFavoriteStory(storyId)
+
+    this.classList.remove('is-favorite')
+    $btn.children().first()[0].classList.replace('fas', 'far')
+  } else {
+    currentUser.addFavoriteStory(storyId)
+
+    this.classList.add('is-favorite')
+    $btn.children().first()[0].classList.replace('far', 'fas')
+  }
+}
+$(document.body).on('click', '.story-favorite-btn', favoriteStoryClick)
+
+$(document.body).on('mouseover', '.story-favorite-btn', function(e) {
+  $(this).children().first()[0].classList.replace('far', 'fas')
+})
+$(document.body).on('mouseout', '.story-favorite-btn', function(e) {
+  if (!this.classList.contains('is-favorite'))
+    $(this).children().first()[0].classList.replace('fas', 'far')
+})

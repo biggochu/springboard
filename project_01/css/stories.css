@@ -4,7 +4,7 @@
   margin: 20px 5px;
 }
 
-.stories-list > li {
+.stories-list>li {
   color: gray;
   font-size: 0.8rem;
   margin: 10px 0;
@@ -36,4 +36,9 @@
 
 .story-user {
   display: block;
+}
+
+.story-favorite-btn {
+  color: orange;
+  cursor: pointer;
 }
