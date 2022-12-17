@@ -119,6 +119,7 @@ class User {
     this.favorites = favorites.map(s => new Story(s));
     this.favoritesIds = favorites.map(s => s.storyId)
     this.ownStories = ownStories.map(s => new Story(s));
+    this.ownStoryIds = ownStories.map(s => s.storyId)
 
     // store the login token on the user so it's easy to find for API calls.
     this.loginToken = token;
@@ -206,6 +207,10 @@ class User {
     }
   }
 
+  /**
+   * Add story to user favorites.
+   * @param {Number} storyId
+   */
   async addFavoriteStory(storyId) {
     try {
       const response = await axios({
@@ -213,13 +218,19 @@ class User {
         method: "POST",
         data: { token: this.loginToken }
       })
+      const { favorites } = response.data.user
 
-      this.favorites = response.data.user.favorites
-    } catch (error) {
-      console.error(error)
+      this.favorites = favorites.map(s => new Story(s))
+      this.favoritesIds = favorites.map(s => s.storyId)
+    } catch (err) {
+      console.error("addFavoriteStory() failed", err)
     }
   }
 
+  /**
+   * Remove story from user favorites.
+   * @param {Number} storyId
+   */
   async removeFavoriteStory(storyId) {
     try {
       const response = await axios({
@@ -227,10 +238,32 @@ class User {
         method: "DELETE",
         data: { token: this.loginToken }
       })
+      const { favorites } = response.data.user
 
-      this.favorites = response.data.user.favorites
-    } catch (error) {
-      console.error(error)
+      this.favorites = favorites.map(s => new Story(s))
+      this.favoritesIds = favorites.map(s => s.storyId)
+    } catch (err) {
+      console.error("removeFavoriteStory() failed", err)
+    }
+  }
+
+  /**
+   * Delete story
+   * @param {Number} storyId
+   */
+  async deleteStory(storyId) {
+    try {
+      const response = await axios({
+        url: `${BASE_URL}/stories/${storyId}`,
+        method: 'DELETE',
+        data: {
+          token: this.loginToken
+        }
+      })
+
+      return response
+    } catch (err) {
+      console.error("deleteStory() failed", err)
     }
   }
 }

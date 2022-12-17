@@ -40,7 +40,7 @@ function navNewStory(e) {
   console.debug('navNewStory', e)
   hidePageComponents()
   $('#new-story-form').show()
-  putStoriesOnPage();
+  $allStoriesList.show()
 }
 $('#nav-new-story').on('click', navNewStory)
 
@@ -53,5 +53,6 @@ $navUserProfile.on('click', navUserProfile)
 function navFavoriteStories(e) {
   console.debug('navFavoriteStories', e)
   hidePageComponents()
+  putFavoritesOnPage()
 }
 $('#nav-favorite-stories').on('click', navFavoriteStories)
