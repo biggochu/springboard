@@ -33,7 +33,7 @@ function generateStoryMarkup(story) {
       favoriteHtml = `<span class="story-favorite-btn"><i class="far fa-star"></i></span>`
     }
 
-    if (currentUser.ownStoryIds.indexOf(story.storyId) > -1) {
+    if (currentUser.ownStoriesIds.indexOf(story.storyId) > -1) {
       deleteHtml = `<span class="story-delete-btn"><i class="fas fa-trash"></i></span>`
     }
   }
@@ -53,17 +53,17 @@ function generateStoryMarkup(story) {
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
-function putStoriesOnPage() {
+function putStoriesOnPage(show = true) {
   console.debug("putStoriesOnPage");
 
-  putStoriesInList(storyList.stories, $allStoriesList)
+  putStoriesInList(storyList.stories, $allStoriesList, show)
 }
 
 /** Renders current user's favorite stories. */
-function putFavoritesOnPage() {
+function putFavoritesOnPage(show = true) {
   console.debug("putFavoritesOnPage")
   if (currentUser.favorites.length) {
-    putStoriesInList(currentUser.favorites, $favoritesList)
+    putStoriesInList(currentUser.favorites, $favoritesList, show)
   } else {
     $favoritesList.empty()
       .append('Apparently you have no favorite stories')
@@ -76,12 +76,14 @@ function putFavoritesOnPage() {
  * @param {Array} stories
  * @param {jQuery} $list
  */
-function putStoriesInList(stories, $list) {
+function putStoriesInList(stories, $list, show = true) {
   console.debug("putStoriesInList")
 
   $list.empty()
     .append(...stories.map(story => generateStoryMarkup(story)))
-    .show()
+
+  if (show)
+    $list.show()
 }
 
 /**
@@ -98,8 +100,10 @@ async function submitNewStory(e) {
     const author = $('#new-story-author').val()
     const url = $('#new-story-url').val()
 
-    const story = await storyList.addStory(currentUser, { title, author, url })
+    const story = await StoryList.addStory(currentUser, { title, author, url })
     storyList.stories = [story, ...storyList.stories]
+    currentUser.ownStories.push(story)
+    currentUser.ownStoriesIds.push(story.storyId)
     putStoriesOnPage()
   } catch (error) {
     console.error(error)
@@ -150,6 +154,11 @@ async function deleteStoryClick(e) {
   const storyId = $storyLI.attr('id')
 
   await currentUser.deleteStory(storyId)
+
+  storyList.removeStory(storyId)
+
+  putStoriesOnPage(false)
+  putFavoritesOnPage(false)
 }
 $(document.body)
   .on('click', '.story-delete-btn', deleteStoryClick)
