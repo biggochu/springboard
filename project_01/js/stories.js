@@ -24,12 +24,17 @@ function generateStoryMarkup(story) {
 
   const hostName = story.getHostName();
   let favoriteHtml = ``
+  let deleteHtml = ``
 
   if (currentUser) {
     if (currentUser.favoritesIds.indexOf(story.storyId) > -1) {
       favoriteHtml = `<span class="story-favorite-btn is-favorite"><i class="fas fa-star"></i></span>`
     } else {
       favoriteHtml = `<span class="story-favorite-btn"><i class="far fa-star"></i></span>`
+    }
+
+    if (currentUser.ownStoryIds.indexOf(story.storyId) > -1) {
+      deleteHtml = `<span class="story-delete-btn"><i class="fas fa-trash"></i></span>`
     }
   }
 
@@ -41,27 +46,48 @@ function generateStoryMarkup(story) {
         </a>
         <small class="story-hostname">(${hostName})</small>
         <small class="story-author">by ${story.author}</small>
+        ${deleteHtml}
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
-
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
 
-  $allStoriesList.empty();
-
-  // loop through all of our stories and generate HTML for them
-  for (let story of storyList.stories) {
-    const $story = generateStoryMarkup(story);
-    $allStoriesList.append($story);
-  }
-
-  $allStoriesList.show();
+  putStoriesInList(storyList.stories, $allStoriesList)
 }
 
+/** Renders current user's favorite stories. */
+function putFavoritesOnPage() {
+  console.debug("putFavoritesOnPage")
+  if (currentUser.favorites.length) {
+    putStoriesInList(currentUser.favorites, $favoritesList)
+  } else {
+    $favoritesList.empty()
+      .append('Apparently you have no favorite stories')
+      .show()
+  }
+}
+
+/**
+ * Appends stories as list items to specified list element.
+ * @param {Array} stories
+ * @param {jQuery} $list
+ */
+function putStoriesInList(stories, $list) {
+  console.debug("putStoriesInList")
+
+  $list.empty()
+    .append(...stories.map(story => generateStoryMarkup(story)))
+    .show()
+}
+
+/**
+ * Reads new story form and submits new story.
+ * @param {EventObject} e
+ */
 async function submitNewStory(e) {
   e.preventDefault()
 
@@ -81,16 +107,22 @@ async function submitNewStory(e) {
 }
 $newStoryForm.on('submit', submitNewStory)
 
-function favoriteStoryClick(e) {
+/**
+ * Add story to or remove story from favorites for current user.
+ * @param {EventObject} e
+ */
+async function favoriteStoryClick(e) {
   const $btn = $(this)
   const $storyLI = $btn.parent()
   const storyId = $storyLI.attr('id')
 
   if (this.classList.contains('is-favorite')) {
-    currentUser.removeFavoriteStory(storyId)
+    await currentUser.removeFavoriteStory(storyId)
 
     this.classList.remove('is-favorite')
     $btn.children().first()[0].classList.replace('fas', 'far')
+
+    putFavoritesOnPage()
   } else {
     currentUser.addFavoriteStory(storyId)
 
@@ -98,12 +130,26 @@ function favoriteStoryClick(e) {
     $btn.children().first()[0].classList.replace('far', 'fas')
   }
 }
-$(document.body).on('click', '.story-favorite-btn', favoriteStoryClick)
+$(document.body)
+  .on('click', '.story-favorite-btn', favoriteStoryClick)
+  .on('mouseover', '.story-favorite-btn', function(e) {
+    this.children[0].classList.replace('far', 'fas')
+  })
+  .on('mouseout', '.story-favorite-btn', function(e) {
+    if (!this.classList.contains('is-favorite'))
+      this.children[0].classList.replace('fas', 'far')
+  })
 
-$(document.body).on('mouseover', '.story-favorite-btn', function(e) {
-  $(this).children().first()[0].classList.replace('far', 'fas')
-})
-$(document.body).on('mouseout', '.story-favorite-btn', function(e) {
-  if (!this.classList.contains('is-favorite'))
-    $(this).children().first()[0].classList.replace('fas', 'far')
-})
+/**
+ * Handle user click to delete a story
+ * @param {EventObject} e
+ */
+async function deleteStoryClick(e) {
+  const $btn = $(this)
+  const $storyLI = $btn.parent()
+  const storyId = $storyLI.attr('id')
+
+  await currentUser.deleteStory(storyId)
+}
+$(document.body)
+  .on('click', '.story-delete-btn', deleteStoryClick)

@@ -42,3 +42,8 @@
   color: orange;
   cursor: pointer;
 }
+
+.story-delete-btn:hover {
+  color: black;
+  cursor: pointer;
+}
