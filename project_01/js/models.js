@@ -89,11 +89,18 @@ class StoryList {
       }
     })
 
+    console.log(response.data.story)
+
     return new Story(response.data.story)
   }
 
+  /**
+   * Remove story from stories array
+   * @param {Number} storyId
+   */
   removeStory(storyId) {
     const idx = this.storiesIds.indexOf(storyId)
+    console.log(idx, storyId)
     if (idx > -1) {
       this.stories.splice(idx, 1)
       this.storiesIds.splice(idx, 1)
@@ -277,7 +284,6 @@ class User {
       }
 
       idx = this.ownStoriesIds.indexOf(storyId)
-      console.log(idx)
       if (idx > -1) {
         this.ownStories.splice(idx, 1)
         this.ownStoriesIds.splice(idx, 1)
