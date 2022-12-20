@@ -59,7 +59,10 @@ function putStoriesOnPage(show = true) {
   putStoriesInList(storyList.stories, $allStoriesList, show)
 }
 
-/** Renders current user's favorite stories. */
+/** 
+ * Renders current user's favorite stories. 
+ * @param {Boolean} show
+ */
 function putFavoritesOnPage(show = true) {
   console.debug("putFavoritesOnPage")
   if (currentUser.favorites.length) {
@@ -75,6 +78,7 @@ function putFavoritesOnPage(show = true) {
  * Appends stories as list items to specified list element.
  * @param {Array} stories
  * @param {jQuery} $list
+ * @param {Boolean} show
  */
 function putStoriesInList(stories, $list, show = true) {
   console.debug("putStoriesInList")
@@ -102,6 +106,7 @@ async function submitNewStory(e) {
 
     const story = await StoryList.addStory(currentUser, { title, author, url })
     storyList.stories = [story, ...storyList.stories]
+    storyList.storiesIds = storyList.stories.map(s => s.storyId)
     currentUser.ownStories.push(story)
     currentUser.ownStoriesIds.push(story.storyId)
     putStoriesOnPage()
