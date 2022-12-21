@@ -69,7 +69,7 @@ function putFavoritesOnPage(show = true) {
     putStoriesInList(currentUser.favorites, $favoritesList, show)
   } else {
     $favoritesList.empty()
-      .append('Apparently you have no favorite stories')
+      .append('No favorite stories')
       .show()
   }
 }
