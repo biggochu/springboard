@@ -12,6 +12,7 @@ def sum_nums(nums):
     # want you to use it. Please write this by hand.
 
     # YOUR CODE HERE
+    return sum(nums)
 
 
 print("sum_nums returned", sum_nums([1, 2, 3, 4]))

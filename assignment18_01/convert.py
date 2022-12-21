@@ -16,6 +16,19 @@ def convert_temp(unit_in, unit_out, temp):
     """
 
     # YOUR CODE HERE
+    if unit_in not in ['c', 'f']:
+      return "Invalid unit {}".format(unit_in)
+    if unit_out not in ['c', 'f']:
+      return "Invalid unit {}".format(unit_out)
+
+    if unit_in == unit_out:
+      return temp
+
+    if unit_in == 'c' and unit_out == 'f':
+      return temp * 1.8 + 32
+
+    if unit_in == 'f' and unit_out == 'c':
+      return (temp - 32) / 1.8
 
 
 print("c", "f", 0, convert_temp("c", "f", 0), "should be 32.0")
