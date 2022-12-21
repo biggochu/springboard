@@ -1,30 +1,38 @@
-let currPlayer = 1
-
 class Connect4 {
   constructor(width, height) {
     this.width = width
     this.height = height
     this.board = []
     this.$board = document.getElementById('board')
+    this.player1 = new Player('red')
+    this.player2 = new Player('blue')
+    this.currPlayer = this.player1
 
-    this.initialize()
+    this.setBoardSize(width, height)
   }
 
-  initialize() {
-    this.makeBoard()
-    this.renderBoard()
-  }
-
+  /**
+   * Generate board data
+   * @return {undefined}
+   */
   makeBoard() {
-    for (let y = 0; h < this.heigth; y++) {
-      this.board.push(Array.from({ length: this.width }))
+    this.board = []
+
+    for (let y = 0; y < this.height; y++) {
+      this.board.push(Array.from(Array(this.width)))
     }
   }
 
+  /**
+   * Render the game board
+   * @return {undefined}
+   */
   renderBoard() {
+    this.$board.innerHTML = ''
+
     const top = document.createElement('tr');
     top.setAttribute('id', 'column-top');
-    top.addEventListener('click', _.bind(handleClick, this));
+    top.addEventListener('click', this.handleClick.bind(this));
 
     for (let x = 0; x < this.width; x++) {
       const headCell = document.createElement('td');
@@ -48,31 +56,11 @@ class Connect4 {
     }
   }
 
-  findSpotForCol(x) {
-    for (let y = this.height - 1; y >= 0; y--) {
-      if (!this.board[y][x]) {
-        return y
-      }
-    }
-    return null
-  }
-
-  placeInTable(y, x) {
-    const piece = document.createElement('div');
-    piece.classList.add('piece');
-    piece.classList.add(`p${currPlayer}`);
-    piece.style.top = -50 * (y + 2);
-
-    const spot = document.getElementById(`${y}-${x}`);
-    spot.append(piece);
-  }
-
-  endGame(msg) {
-    alert(msg)
-  }
-
+  /**
+   * Check if current player's move is a winning move
+   */
   checkForWin() {
-    function _win(cells) {
+    const _win = (cells) => {
       // Check four cells to see if they're all color of current player
       //  - cells: list of four (y, x) cells
       //  - returns true if all are legal coordinates & all match currPlayer
@@ -83,7 +71,7 @@ class Connect4 {
         y < this.height &&
         x >= 0 &&
         x < this.width &&
-        this.board[y][x] === currPlayer
+        this.board[y][x] === this.currPlayer
       );
     }
 
@@ -124,6 +112,32 @@ class Connect4 {
     }
   }
 
+  /**
+   * Alert end of game
+   * @param  {String} msg
+   * @return {[type]}
+   */
+  endGame(msg) {
+    alert(msg)
+  }
+
+  /**
+   * @param  {Number} x
+   * @return {Number|null}
+   */
+  findSpotForCol(x) {
+    for (let y = this.height - 1; y >= 0; y--) {
+      if (this.board[y][x] === undefined) {
+        return y
+      }
+    }
+    return null
+  }
+
+  /**
+   * @param  {EventObject} evt
+   * @return {undefined}
+   */
   handleClick(evt) {
     // get x from ID of clicked cell
     const x = +evt.target.id;
@@ -135,12 +149,12 @@ class Connect4 {
     }
 
     // place piece in board and add to HTML table
-    this.board[y][x] = currPlayer;
+    this.board[y][x] = this.currPlayer;
     this.placeInTable(y, x);
 
     // check for win
     if (this.checkForWin()) {
-      return this.endGame(`Player ${currPlayer} won!`);
+      return this.endGame(`Player ${this.currPlayer} won!`);
     }
 
     // check for tie
@@ -149,7 +163,48 @@ class Connect4 {
     }
 
     // switch players
-    currPlayer = currPlayer === 1 ? 2 : 1;
+    this.currPlayer = this.currPlayer === this.player1 ? this.player2 : this.player1;
+  }
+
+  /**
+   * @param  {Number} y
+   * @param  {Number} x
+   * @return {undefined}
+   */
+  placeInTable(y, x) {
+    const piece = document.createElement('div');
+    piece.classList.add('piece');
+    piece.style.top = -50 * (y + 2);
+    piece.style.backgroundColor = this.currPlayer.color
+
+    const spot = document.getElementById(`${y}-${x}`);
+    spot.append(piece);
+  }
+
+  /**
+   * @param {Number} width
+   * @param {Number} height
+   */
+  setBoardSize(width, height) {
+    this.width = width
+    this.height = height
+
+    this.makeBoard()
+    this.renderBoard()
+  }
+}
+
+class Player {
+  constructor(color) {
+    this.color = color
+  }
+
+  /**
+   * Set player color
+   * @param {String} color
+   */
+  setColor(color) {
+    this.color = color
   }
 }
 
