@@ -8,7 +8,12 @@ class Connect4 {
     this.player2 = new Player('blue')
     this.currPlayer = this.player1
 
-    this.setBoardSize(width, height)
+    this.initialize()
+  }
+
+  initialize() {
+    document.getElementById('start-btn').addEventListener('click', e => this.startGame())
+    this.startGame()
   }
 
   /**
@@ -122,6 +127,7 @@ class Connect4 {
   }
 
   /**
+   * Identify bottom most empty spot in column
    * @param  {Number} x
    * @return {Number|null}
    */
@@ -135,6 +141,7 @@ class Connect4 {
   }
 
   /**
+   * Handle column placement click
    * @param  {EventObject} evt
    * @return {undefined}
    */
@@ -167,6 +174,7 @@ class Connect4 {
   }
 
   /**
+   * Add player piece to board
    * @param  {Number} y
    * @param  {Number} x
    * @return {undefined}
@@ -182,6 +190,7 @@ class Connect4 {
   }
 
   /**
+   * Set the board size and render board
    * @param {Number} width
    * @param {Number} height
    */
@@ -191,6 +200,23 @@ class Connect4 {
 
     this.makeBoard()
     this.renderBoard()
+  }
+
+  /**
+   * Set board size and set player colors
+   * @return {undefined}
+   */
+  startGame() {
+    const $width = document.getElementById('width')
+    const $height = document.getElementById('height')
+
+    this.setBoardSize(+$width.value, +height.value)
+
+    const $player1Color = document.getElementById('player1-color')
+    const $player2Color = document.getElementById('player2-color')
+
+    this.player1.setColor($player1Color.value)
+    this.player2.setColor($player2Color.value)
   }
 }
 
