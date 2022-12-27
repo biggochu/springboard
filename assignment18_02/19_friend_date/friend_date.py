@@ -16,3 +16,17 @@ def friend_date(a, b):
         >>> friend_date(sauron, gandalf)
         True
     """
+    in_common = False
+    hobbies_a = a[2]
+    hobbies_b = b[2]
+
+    if len(hobbies_a) <= len(hobbies_b):
+        for hobby in hobbies_b:
+            if hobby in hobbies_a:
+                in_common = True
+    else:
+        for hobby in hobbies_a:
+            if hobby in hobbies_b:
+                in_common = True
+
+    return in_common
