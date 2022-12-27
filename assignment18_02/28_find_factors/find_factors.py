@@ -1,3 +1,6 @@
+from math import sqrt
+
+
 def find_factors(num):
     """Find factors of num, in increasing order.
 
@@ -13,3 +16,14 @@ def find_factors(num):
     >>> find_factors(321421)
     [1, 293, 1097, 321421]
     """
+    factors = [1]
+    limit = int(sqrt(num))
+
+    for n in range(2, limit):
+        if num % n == 0:
+            factors.append(n)
+            factors.append(int(num / n))
+
+    factors.sort()
+    factors.append(num)
+    return factors
