@@ -1,0 +1,71 @@
+What is HTTP?
+HTTP is HyperText Transfer Protocol which is the protocol utilized to communicate between browsers and servers.
+
+What is a URL?
+URL is Uniform Resource Locator which is webpage's address.
+
+What is DNS?
+DNS is Domain Name Service which converts human-readable hostnames into IP addresses.
+
+What is a query string?
+The query string is an optional set of arguments to 'carry' additional data.
+
+What are two HTTP verbs and how are they different?
+GET is the method used when making requests without side effects.
+POST is the method used when sending data with side effects.
+
+What is an HTTP request?
+A client makes an HTTP request to a server when requesting a resource.
+
+What is an HTTP response?
+A server returns an HTTP response to a HTTP request.
+
+
+What is an HTTP header? Give a couple examples of request and response headers you have seen.
+An HTTP header is a part of HTTP requests or responses that contains metadata.
+
+GET /software-engineering-career-track/default/lectures/how-web-works/ HTTP/2
+Host: curric.springboard.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:108.0) Gecko/20100101 Firefox/108.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+DNT: 1
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: cross-site
+Sec-GPC: 1
+Pragma: no-cache
+Cache-Control: no-cache
+TE: trailers
+
+HTTP/2 200 OK
+date: Wed, 04 Jan 2023 05:39:33 GMT
+content-type: text/html
+x-guploader-uploadid: ADPycduZSfEmojyFlzGtN4kPbn1tYRZiThAVpCksd2-KhpFJjtxeEUc6eL08U64gyVVXqbT65vXHbK3rcYCdZXq0c-FCgw
+x-goog-generation: 1647434574704171
+x-goog-metageneration: 1
+x-goog-stored-content-encoding: identity
+x-goog-stored-content-length: 39069
+x-goog-hash: crc32c=ovvlhA==
+x-goog-hash: md5=gNY2WBiqTSQYoxukOxslxA==
+x-goog-storage-class: STANDARD
+expires: Wed, 04 Jan 2023 06:39:29 GMT
+cache-control: public, max-age=3600
+last-modified: Wed, 16 Mar 2022 12:42:54 GMT
+etag: W/"80d6365818aa4d2418a31ba43b1b25c4"
+age: 4
+cf-cache-status: DYNAMIC
+server: cloudflare
+cf-ray: 7841a2638bdb7e6e-LAX
+content-encoding: br
+X-Firefox-Spdy: h2
+
+
+What are the processes that happen when you type “http://somesite.com/some/page.html” into a browser?
+1) DNS lookup of somesite.com
+2) Browser makes a request to server somesite.com
+3) Server handles requests and responds with page.html
+4) Browser renders page.html

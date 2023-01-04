@@ -1,0 +1,22 @@
+1. curl -H "Accept: application/json" https://icanhazdadjoke.com/search?term=pirate
+
+2. 
+; <<>> DiG 9.10.6 <<>> icanhazdadjoke.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 1560
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;icanhazdadjoke.com.		IN	A
+
+;; ANSWER SECTION:
+icanhazdadjoke.com.	203	IN	A	104.21.66.15
+icanhazdadjoke.com.	203	IN	A	172.67.198.173
+
+;; Query time: 87 msec
+;; SERVER: 10.1.0.1#53(10.1.0.1)
+;; WHEN: Tue Jan 03 21:45:21 PST 2023
+;; MSG SIZE  rcvd: 79
