@@ -10,13 +10,13 @@ debug = DebugToolbarExtension(app)
 
 @app.route("/")
 def home_page():
-		"""Render story form"""
+    """Render story form"""
     return render_template("homepage.html", prompts=story.prompts)
 
 
 @app.route("/story", methods=["POST"])
 def render_story():
-		"""Render story"""
+    """Render story"""
     answers = dict()
 
     for prompt in story.prompts:
