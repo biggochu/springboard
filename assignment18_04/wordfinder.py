@@ -19,12 +19,16 @@ class WordFinder:
     """
 
     def __init__(self, filepath):
+        """Create a WordFinder by loading words in a file"""
         self.filepath = filepath
         self.words = []
         self.load(filepath)
 
+    def __repr__(self):
+        return f"<WordFinder words={len(self.words)} filepath={self.filepath}>"
+
     def load(self, filepath):
-        """load list of words from specified filepath"""
+        """Load list of words from specified filepath"""
         try:
             with open(filepath) as f:
                 self.words = [line.rstrip() for line in f.readlines()]
@@ -33,7 +37,7 @@ class WordFinder:
             print("Unable to load file")
 
     def random(self):
-        """select a random word from word list"""
+        """Select a random word from word list"""
         index = random.randint(0, len(self.words) - 1)
         return self.words[index]
 
@@ -47,7 +51,11 @@ class SpecialWordFinder(WordFinder):
     """
 
     def __init__(self, filepath):
+        """Create a SpecialWordFinder by loading words in a file"""
         super().__init__(filepath)
+
+    def __repr__(self):
+        return f"<SpecialWordFinder words={len(self.words)} filepath={self.filepath}>"
 
     def load(self, filepath):
         """load list of words from sepcified filepath excluding blank lines and comments"""
