@@ -1,0 +1,9 @@
+{%  extends 'base.html.jinja' %}
+
+{%  block content %}
+	<div class="col-lg-6">
+		<h1>{{ survey.title }}</h1>
+		<div> {{ survey.instructions }} </div>
+		<a class="btn btn-primary" href="/surveys/{{survey_id}}/questions/0">Start survey</a>
+	</div>
+{%  endblock  %}
