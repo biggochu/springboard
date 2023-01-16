@@ -27,3 +27,15 @@ h2 {
 	margin-right: 1em;
 	font-size: 20px;
 }
+
+.flash-msg {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	margin: 8px;
+	padding: 8px 12px;
+	background-color: red;
+	color: white;
+	border-radius: 5px;
+}

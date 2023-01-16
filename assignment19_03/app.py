@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, flash
 from flask_debugtoolbar import DebugToolbarExtension
 
 from surveys import surveys
@@ -31,6 +31,7 @@ def show_question(survey_id, question_id):
 
     if question_id != len(responses[survey_id]):
         redirect_id = len(responses[survey_id])
+        flash("Warning: Question out of order")
         return redirect(f"/surveys/{survey_id}/questions/{redirect_id}")
 
     if len(responses[survey_id]) == len(survey.questions):
