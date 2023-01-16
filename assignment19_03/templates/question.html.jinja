@@ -1,0 +1,28 @@
+{% extends 'base.html.jinja' %}
+
+{% block content %}
+	<form class="row justify-content-md-center" method="POST">
+		<div class="col-lg-6">
+			<h2>Question {{ question_id+1 }}</h2>
+			<div class="question-container">
+			{{ question.question }}
+			</div>
+			<div class="choices-container">
+			{% for choice in question.choices: %}
+				<label class="choice-label">
+					<input type="radio" value="{{choice}}" name="choice" />
+					{{ choice }}
+				</label>
+			{% endfor %}
+			</div>
+		</div>
+		<div class="col-lg-2 d-flex align-items-center">
+			{% if final_question: %}
+				<button class="btn btn-primary">Finish</button>
+			{% else: %}
+				<!-- <a class="btn btn-primary" href="/surveys/{{survey_id}}/questions/{{question_id+1}}">Next</a> -->
+				<button class="btn btn-primary">Next</button>
+			{% endif %}
+		</div>
+	</form>
+{% endblock %}
