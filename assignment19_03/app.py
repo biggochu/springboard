@@ -6,10 +6,11 @@ from surveys import surveys
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "asdf"
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
+app.run(debug=True, port=5001)
 
 DebugToolbarExtension(app)
 
-responses = []
+responses = {key: [] for key in surveys}
 
 
 @app.route("/")
@@ -26,10 +27,15 @@ def survey_view(survey_id):
 
 @app.route("/surveys/<survey_id>/questions/<int:question_id>")
 def show_question(survey_id, question_id):
-    if question_id != len(responses):
-        return redirect(f"/surveys/{survey_id}/questions/{len(responses)}")
-
     survey = surveys[survey_id]
+
+    if question_id != len(responses[survey_id]):
+        redirect_id = len(responses[survey_id])
+        return redirect(f"/surveys/{survey_id}/questions/{redirect_id}")
+
+    if len(responses[survey_id]) == len(survey.questions):
+        return redirect(f"/surveys/{survey_id}/done")
+
     question = survey.questions[question_id]
 
     return render_template(
@@ -48,7 +54,7 @@ def save_response(survey_id, question_id):
 
     choice = request.form.get("choice")
 
-    responses.append(choice)
+    responses[survey_id].append(choice)
 
     if question_id < len(survey.questions) - 1:
         return redirect(f"/surveys/{survey_id}/questions/{question_id+1}")
